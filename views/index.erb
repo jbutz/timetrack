@@ -1,0 +1,23 @@
+<% if flash[:notice] %>
+<p><%=flash[:notice]%></p>
+<% end %>
+
+<% if @authenticated %>
+	<% if @openpunch %>
+		<form action="/punch/out" method="post">
+			<div class="form-group">
+				<input type="text" name="timestamp" value="<%=@now%>" class="form-control">
+			</div>
+			<input type="submit" class="btn btn-primary btn-lg btn-block" value="Punch Out">
+		</form>
+	<% else %>
+		<form action="/punch/in" method="post">
+			<div class="form-group">
+				<input type="text" name="timestamp" value="<%=@now%>" class="form-control">
+			</div>
+			<input type="submit" class="btn btn-primary btn-lg btn-block" value="Punch In">
+		</form>
+	<% end %>
+<% else %>
+	<a class="btn btn-primary btn-lg btn-block" href="/auth">Login</a>
+<% end %>

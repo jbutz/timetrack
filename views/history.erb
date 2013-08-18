@@ -1,0 +1,17 @@
+<h2>History <small>Per Day</small></h2>
+<table class="table">
+<thead>
+	<tr>
+		<th>Date</th>
+		<th>Duration</th>
+	</tr>
+</thead>
+<tbody>
+	<% @punches.each do |punch|%>
+	<tr>
+		<td><%=punch['_id'] %></td>
+		<td><%=Time.at( punch['value'] / 1000).utc.strftime("%H:%M:%S") %></td>
+	</tr>
+	<% end %>
+</tbody>
+</table>

@@ -1,0 +1,33 @@
+<h2>History <small>Detail</small></h2>
+<table class="table">
+<thead>
+	<tr>
+		<th>In</th>
+		<th>Out</th>
+		<th>Duration</th>
+		<th></th>
+	</tr>
+</thead>
+<tbody>
+	<% @punches.each do |punch|%>
+	<tr>
+		<td><%=punch.in.localtime(settings.timezone).strftime("%m/%d/%Y %H:%M:%S") %></td>
+		<%
+		out = ""
+		if punch.out
+			out = punch.out.localtime(settings.timezone).strftime("%m/%d/%Y %H:%M:%S")
+		end
+		%>
+		<td><%= out%></td>
+		<td>
+			<% if punch.out %>
+			<%= Time.at(punch.out - punch.in).utc.strftime("%H:%M:%S") %>
+			<% else %>
+			<%= Time.at(Time.new - punch.in).utc.strftime("%H:%M:%S") %>
+			<% end %>
+		</td>
+		<td><a href="/edit/<%= punch.id %>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+	</tr>
+	<% end %>
+</tbody>
+</table>

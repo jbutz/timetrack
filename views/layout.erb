@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="/css/bootstrap-glyphicons.css"/>
+	<title>Time Tracker</title>
+	<style>
+		body { padding-bottom: 70px; }
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1>Time Tracking <small>because knowing how much you work is important</small></h1>
+	</div>
+	<%= yield %>
+	<nav class="navbar navbar-fixed-bottom" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex4-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex4-collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/">Home</a></li>
+				<li><a href="/history">History</a></li>
+				<li><a href="/history/details">Details</a></li>
+			</ul>
+			<p class="navbar-text pull-right">Timezone: <%= settings.timezone %></p>
+		</div>
+	</nav>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/js/bootstrap.min.js"></script>
+</body>
+</html>
