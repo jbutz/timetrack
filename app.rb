@@ -86,7 +86,10 @@ get '/history', :auth => '' do
 	  }
 	}
 
-	@punches = Punch.map_reduce(map, reduce).out(inline: true)
+	@punches = Punch.map_reduce(map, reduce).out(inline: true).sort_by do |x|
+		Chronic.parse(x['_id'])
+	end
+	@punches = @punches.reverse!
 	erb :history
 end
 
@@ -101,9 +104,11 @@ post '/edit/:id', :auth => '' do
 	outTimestamp = NIL
 	if params[:in]
 		inTimestamp = Chronic.parse(params[:in])
+		inTimestamp = inTimestamp.utc
 	end
 	if params[:out]
 		outTimestamp = Chronic.parse(params[:out])
+		outTimestamp = outTimestamp.utc
 	end
 
 	if !inTimestamp
@@ -145,12 +150,12 @@ post '/punch/:type', :auth => '' do
 
 	if params[:type] == "in"
 		t = Punch.new({
-			in: timestamp,
+			in: timestamp.utc,
 			email: email
 		})
 	elsif params[:type] == "out"
 		t = Punch.where(out: nil).first
-		t.out = timestamp
+		t.out = timestamp.utc
 	else
 		"WTF are you trying to pull?"
 	end
@@ -169,7 +174,7 @@ get '/punch/:type', :auth => '' do
 	end
 	email = session[:email]
 	timestamp = Time.new
-	timestamp = timestamp.localtime(settings.timezone)
+	timestamp = timestamp
 
 	if params[:type] == "in"
 		t = Punch.new({
