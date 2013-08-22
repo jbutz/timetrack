@@ -44,6 +44,8 @@ def client
 	})
 end
 ##
+Time.zone = settings.timezone
+##
 set(:auth) do |auth|
   condition do
     unless session[:authenticated]
