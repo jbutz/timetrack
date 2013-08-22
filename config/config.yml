@@ -1,4 +1,6 @@
 development:
   timezone: '-04:00'
+  timezoneName: 'US/Eastern'
 production:
   timezone: '-04:00'
+  timezoneName: 'US/Eastern'

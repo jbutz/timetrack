@@ -43,8 +43,10 @@ def client
 		:token_url => "/o/oauth2/token"
 	})
 end
-##
-Time.zone = settings.timezone
+## Get the Timezones right
+if settings.timezoneName
+	ENV['TZ'] = settings.timezoneName
+end
 ##
 set(:auth) do |auth|
   condition do
