@@ -59,6 +59,10 @@ get '/' do
 	@authenticated = session[:authenticated]
 	@openpunch = Punch.where(out: nil).first
 	@now = Time.now.localtime(settings.timezone).strftime("%m/%d/%Y %H:%M")
+
+	response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+	response['Pragma'] = 'no-cache'
+	response['Expires'] = '0'
 	erb :index
 end
 
