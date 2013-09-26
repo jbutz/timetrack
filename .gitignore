@@ -3,6 +3,7 @@
 .bundle
 .config
 .yardoc
+.ruby-gemset
 InstalledFiles
 _yardoc
 coverage
