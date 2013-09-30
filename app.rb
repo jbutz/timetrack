@@ -108,13 +108,11 @@ get '/edit/:id', :auth => '' do
 end
 
 post '/edit/:id', :auth => '' do
-	inTimestamp = NIL
-	outTimestamp = NIL
-	if params[:in]
+	unless params[:in].nil? || params[:in].empty?
 		inTimestamp = Chronic.parse(params[:in])
 		inTimestamp = inTimestamp.utc
 	end
-	if params[:out]
+	unless params[:out].nil? || params[:out].empty?
 		outTimestamp = Chronic.parse(params[:out])
 		outTimestamp = outTimestamp.utc
 	end
