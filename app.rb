@@ -166,7 +166,7 @@ post '/punch/:type', :auth => '' do
 		"WTF are you trying to pull?"
 	end
 	if t.save
-		flash[:notice] = "Punched at #{timestamp.strftime("%m/%d/%Y %H:%M:%S")}"
+		flash[:notice] = "Punched at #{timestamp.localtime(settings.timezone).strftime("%m/%d/%Y %H:%M:%S")}"
 		redirect '/'
 	else
 		"Error saving punch"
