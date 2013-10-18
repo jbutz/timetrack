@@ -1,14 +1,14 @@
 <form role="form" method="post">
 	<div class="form-group">
 		<label for="in">In</label>
-		<input type="text" class="form-control" id="in" name="in" placeholder="In" value="<%= @punch.in.localtime(settings.timezone).strftime("%m/%d/%Y %H:%M") %>">
+		<input type="text" class="form-control" id="in" name="in" placeholder="In" value="<%= PunchTime.db_to_display(settings.timezoneName, @punch.in) %>">
 	</div>
 	<div class="form-group">
 		<label for="out">Out</label>
 		<%
 			out = ""
 			if @punch.out
-				out = @punch.out.localtime(settings.timezone).strftime("%m/%d/%Y %H:%M")
+				out = PunchTime.db_to_display(settings.timezoneName, @punch.out)
 			end
 		%>
 		<input type="text" class="form-control" id="out" name="out" placeholder="Out" value="<%= out %>">

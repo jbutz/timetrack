@@ -2,6 +2,11 @@ require 'chronic'
 require 'tzinfo'
 
 class PunchTime
+	OUTPUT_FORMAT = "%m/%d/%Y %H:%M"
+	def self.db_to_display(tz, timestamp)
+		tzinfo = TZInfo::Timezone.get(tz)
+		tzinfo.strftime(OUTPUT_FORMAT, timestamp.utc)
+	end
 
 	def initialize( tz )
 		@tz = TZInfo::Timezone.get(tz)
@@ -29,8 +34,8 @@ class PunchTime
 
 	# Consistently display a format
 	def to_display
-		#@tz.utc_to_local( @time ).strftime("%m/%d/%Y %H:%M")
-		@tz.strftime("%m/%d/%Y %H:%M", @time)
+		#@tz.utc_to_local( @time ).strftime(OUTPUT_FORMAT)
+		@tz.strftime(OUTPUT_FORMAT, @time)
 	end
 
 	# EVERYTHING in the DB needs to be UTC

@@ -101,4 +101,12 @@ describe PunchTime do
 		end
 	end
 
+	describe '.db_to_display' do
+		it 'returns local time' do
+			# On October 1, 2013 UTC and New York are known to be 4 hours apart, so the offset has been manually set
+			#  to ensure that the correct results are being given
+			expect( PunchTime.db_to_display("America/New_York", Time.parse("2013-10-01 04:00 +00:00")) ).to eq("10/01/2013 00:00")
+		end
+	end
+
 end
