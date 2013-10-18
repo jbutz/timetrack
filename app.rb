@@ -5,6 +5,7 @@ require 'mongoid'
 require 'json'
 require 'oauth2'
 require 'chronic'
+require './lib/punch_time'
 
 config_file File.dirname(__FILE__) + '/config/config.yml'
 
@@ -43,11 +44,6 @@ def client
 		:token_url => "/o/oauth2/token"
 	})
 end
-## Get the Timezones right
-if settings.timezoneName
-	ENV['TZ'] = settings.timezoneName
-end
-##
 set(:auth) do |auth|
   condition do
     unless session[:authenticated]
@@ -58,7 +54,7 @@ end
 get '/' do
 	@authenticated = session[:authenticated]
 	@openpunch = Punch.where(out: nil).first
-	@now = Time.now.localtime(settings.timezone).strftime("%m/%d/%Y %H:%M")
+	@now = PunchTime.new( settings.timezoneName ).now.to_display
 
 	response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
 	response['Pragma'] = 'no-cache'
@@ -108,22 +104,21 @@ get '/edit/:id', :auth => '' do
 end
 
 post '/edit/:id', :auth => '' do
-	unless params[:in].nil? || params[:in].empty?
-		inTimestamp = Chronic.parse(params[:in])
-		inTimestamp = inTimestamp.utc
-	end
-	unless params[:out].nil? || params[:out].empty?
-		outTimestamp = Chronic.parse(params[:out])
-		outTimestamp = outTimestamp.utc
-	end
+	# Setup the PunchTimes
+	inTime = PunchTime.new settings.timezoneName
+	outTime = PunchTime.new settings.timezoneName
 
-	if !inTimestamp
+	inTime.set_time params[:in] unless params[:in].nil? || params[:in].empty?
+	outTime.set_time params[:out] unless params[:out].nil? || params[:out].empty?
+
+
+	if !inTime.valid?
 		flash[:notice] = "You have to have a time for the punch to start..."
 		redirect '/edit/' + params[:id]
 	end
 	punch = Punch.find(params[:id]).update_attributes(
-		in: inTimestamp,
-		out: outTimestamp
+		in: inTime.to_db,
+		out: outTime.to_db
 	)
 	if punch
 		flash[:notice] = "Punch Updated!"
@@ -150,23 +145,26 @@ post '/punch/:type', :auth => '' do
 		erb :fail
 		return
 	end
+
+	# Setup PunchTime
+	timestamp = PunchTime.new settings.timezoneName
+
 	email = session[:email]
-	timestamp = Chronic.parse(params[:timestamp])
-	#timestamp = timestamp.localtime(settings.timezone)
+	timestamp.set_time params[:timestamp]
 
 	if params[:type] == "in"
 		t = Punch.new({
-			in: timestamp.utc,
+			in: timestamp.to_db,
 			email: email
 		})
 	elsif params[:type] == "out"
 		t = Punch.where(out: nil).first
-		t.out = timestamp.utc
+		t.out = timestamp.to_db
 	else
 		"WTF are you trying to pull?"
 	end
 	if t.save
-		flash[:notice] = "Punched at #{timestamp.localtime(settings.timezone).strftime("%m/%d/%Y %H:%M:%S")}"
+		flash[:notice] = "Punched at #{timestamp.to_display}"
 		redirect '/'
 	else
 		"Error saving punch"
@@ -179,22 +177,21 @@ get '/punch/:type', :auth => '' do
 		return
 	end
 	email = session[:email]
-	timestamp = Time.new
-	timestamp = timestamp
+	timestamp = PunchTime.new settings.timezoneName
 
 	if params[:type] == "in"
 		t = Punch.new({
-			in: timestamp,
+			in: timestamp.to_db,
 			email: email
 		})
 	elsif params[:type] == "out"
 		t = Punch.where(out: nil).first
-		t.out = timestamp
+		t.out = timestamp.to_db
 	else
 		"WTF are you trying to pull?"
 	end
 	if t.save
-		flash[:notice] = "Punched at #{timestamp.strftime("%m/%d/%Y %H:%M:%S")}"
+		flash[:notice] = "Punched at #{timestamp.to_display}"
 		redirect '/'
 	else
 		"Error saving punch"

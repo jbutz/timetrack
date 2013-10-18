@@ -1,6 +1,4 @@
 development:
-  timezone: '-04:00'
-  timezoneName: 'US/Eastern'
+  timezoneName: 'America/Indiana/Indianapolis'
 production:
-  timezone: '-04:00'
-  timezoneName: 'US/Eastern'
+  timezoneName: 'America/Indiana/Indianapolis'
