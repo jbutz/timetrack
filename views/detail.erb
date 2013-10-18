@@ -11,11 +11,11 @@
 <tbody>
 	<% @punches.each do |punch|%>
 	<tr>
-		<td><%=punch.in.localtime(settings.timezone).strftime("%m/%d/%Y %H:%M:%S") %></td>
+		<td><%= PunchTime.db_to_display(settings.timezoneName, punch.in) %></td>
 		<%
 		out = ""
 		if punch.out
-			out = punch.out.localtime(settings.timezone).strftime("%m/%d/%Y %H:%M:%S")
+			out = PunchTime.db_to_display(settings.timezoneName, punch.out)
 		end
 		%>
 		<td><%= out%></td>
