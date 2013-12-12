@@ -68,14 +68,20 @@ get '/history/details', :auth => '' do
 end
 
 get '/history', :auth => '' do
+	offset_seconds = TZInfo::Timezone.get(settings.timezoneName).current_period().offset.utc_offset
+
 	map = %Q{
 	  function() {
+	  	var offset_hours = #{offset_seconds} / 3600;
+	  	var hours = this.in.getHours();
+	  	var tmp_in = this.in;
+	  	tmp_in.setHours(hours + offset_hours);
 	  	if(this.out)
-	    	emit(this.in.toDateString(), this.out - this.in);
+	    	emit(tmp_in.toDateString(), this.out - this.in);
 	    else
 	    {
 	    	var d = new Date();
-	    	emit(this.in.toDateString(), d - this.in);
+	    	emit(tmp_in.toDateString(), d - this.in);
 	    }
 	  }
 	}
