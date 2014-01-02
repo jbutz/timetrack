@@ -11,4 +11,4 @@ Bundler.require
 require File.expand_path(File.dirname(__FILE__) + '/app')
 Mongoid.load!(File.expand_path(File.dirname(__FILE__) + "/config/mongoid.yml"))
 
-run Sinatra::Application
+run TimeTrack
