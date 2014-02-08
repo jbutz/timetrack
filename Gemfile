@@ -23,6 +23,9 @@ group :development, :test do
 	# Testing
     gem 'rspec'
     gem 'rack-test', :require => "rack/test"
+
+    # Debugging
+    gem 'pry'
 end
 
 group :production do

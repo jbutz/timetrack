@@ -7,11 +7,12 @@ Time Tracker is a small one-user application to help you track your time. I use 
 Set your local timezone in `./config/config.yml`. The default is set to Eastern Time.
 
 ### Environment Variables
-There are three environment variables you need to set `G_API_CLIENT`, `G_API_SECRET`, and `VALID_EMAIL`.
+There are three environment variables you need to set `G_API_CLIENT`, `G_API_SECRET`, and `VALID_EMAIL`. Setting `SESSION_SECRET` is optional but encouraged.
 
 * `G_API_CLIENT` - Google API Client ID
 * `G_API_SECRET` - Google API Client Secret
 * `VALID_EMAIL` - A string of e-mail addresses that can use the application
+* `SESSION_SECRET` - A random string used with encoding sessions
 
 To get your Google API client id and secret you will need to use the [Google API Console](https://code.google.com/apis/console/).
 

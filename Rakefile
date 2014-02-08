@@ -1,6 +1,6 @@
 require 'rspec/core/rake_task'
 
-task :default => :help
+task :default => ['spec']
 
 desc "Run specs"
 task :spec do
@@ -8,3 +8,4 @@ task :spec do
 		t.pattern = './spec/**/*_spec.rb'
 	end
 end
+ 
