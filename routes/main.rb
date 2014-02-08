@@ -16,7 +16,7 @@ module Routing
 			end
 
 			app.get "/auth" do
-				redirect client.auth_code.authorize_url(:redirect_uri => redirect_uri(request),:scope => SCOPES,:access_type => "online")
+				redirect client.auth_code.authorize_url(:redirect_uri => redirect_uri(request),:scope => 'https://www.googleapis.com/auth/userinfo.email',:access_type => "online")
 			end
 
 			app.get '/oauth2callback' do
