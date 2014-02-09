@@ -17,12 +17,12 @@ gem 'bson_ext'
 gem 'chronic'
 gem 'tzinfo'
 
+# Testing, but needs to be around for Heroku
+gem 'rspec'
+gem 'rack-test', :require => "rack/test"
+
 group :development, :test do
 	gem 'rake'
-
-	# Testing
-    gem 'rspec'
-    gem 'rack-test', :require => "rack/test"
 
     # Debugging
     gem 'pry'
