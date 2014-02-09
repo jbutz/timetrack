@@ -29,7 +29,7 @@ module Routing
 				# intelligently try and parse the response.body
 				response = access_token.get('https://www.googleapis.com/userinfo/email?alt=json')
 				session[:email] = response.parsed['data']['email']
-				session[:authenticated] = VALID_EMAIL.include? session[:email]
+				session[:authenticated] = ENV['VALID_EMAIL'].include? session[:email]
 
 				if session[:authenticated]
 					redirect to('/')

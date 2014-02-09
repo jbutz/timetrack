@@ -8,7 +8,7 @@ module TimeTrack
 			uri.to_s
 		end
 		def client
-			client ||= OAuth2::Client.new(G_API_CLIENT, G_API_SECRET, {
+			client ||= OAuth2::Client.new(ENV['G_API_CLIENT'], ENV['G_API_SECRET'], {
 				:site => 'https://accounts.google.com',
 				:authorize_url => "/o/oauth2/auth",
 				:token_url => "/o/oauth2/token"
