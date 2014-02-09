@@ -1,6 +1,7 @@
 
 class TimeTrack  < Sinatra::Base
-	enable :sessions
+	set :sessions,
+          secret: ENV['SESSION_SECRET']
 
 	set :root, File.dirname(__FILE__)
 

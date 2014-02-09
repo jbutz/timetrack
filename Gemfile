@@ -26,6 +26,7 @@ group :development, :test do
 
     # Debugging
     gem 'pry'
+    gem 'pry-nav'
 end
 
 group :production do

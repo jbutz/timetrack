@@ -8,6 +8,8 @@
 	<style>
 		body { padding-bottom: 70px; }
 	</style>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -28,13 +30,13 @@
 			<ul class="nav navbar-nav">
 				<li><a href="/">Home</a></li>
 				<li><a href="/history">History</a></li>
-				<li><a href="/history/details">Details</a></li>
+				<li><a href="/history/graph/week">Graph - Weeks</a></li>
+				<li><a href="/history/graph/day">Graph - Days</a></li>
+				<li><a href="/punchlist">Punch List</a></li>
 			</ul>
 			<p class="navbar-text pull-right">Timezone: <%= settings.timezoneName.gsub('_',' ') %></p>
 		</div>
 	</nav>
 </div>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/js/bootstrap.min.js"></script>
 </body>
 </html>
