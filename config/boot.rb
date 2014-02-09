@@ -14,21 +14,8 @@ require 'sinatra/config_file'
 require 'sinatra/flash'
 require 'uri'
 
-unless G_API_CLIENT = ENV['G_API_CLIENT']
-	raise "You must specify the G_API_CLIENT env variable"
-end
-
-unless G_API_SECRET = ENV['G_API_SECRET']
-	raise "You must specify the G_API_SECRET env variable"
-end
-
-unless VALID_EMAIL = ENV['VALID_EMAIL']
-	raise "You must specify the VALID_EMAIL env variable"
-end
-
 unless ENV['SESSION_SECRET']
 	ENV['SESSION_SECRET'] = SecureRandom.hex(16)
-	puts "You might want to set SESSION_SECRET. You are going to get a random session key every time otherwise."
 end
 
 Mongoid.load!(File.expand_path(File.dirname(__FILE__) + "/mongoid.yml"))
