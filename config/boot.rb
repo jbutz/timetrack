@@ -31,11 +31,6 @@ unless ENV['SESSION_SECRET']
 	puts "You might want to set SESSION_SECRET. You are going to get a random session key every time otherwise."
 end
 
-use Rack::Session::Cookie, :key => 'rack.session',
-						   :path => '/',
-						   :expire_after => 14400, # In seconds
-						   :secret => ENV['SESSION_SECRET']
-
 Mongoid.load!(File.expand_path(File.dirname(__FILE__) + "/mongoid.yml"))
 
 Dir[

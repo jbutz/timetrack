@@ -43,6 +43,11 @@ module Routing
 					redirect '/edit/' + params[:id]
 				end
 			end
+
+			app.get '/punchlist', :auth => '' do
+				@punches = Punch.order_by(:in.desc, :out.desc)
+				erb :punchlist
+			end
 		end
 	end
 end

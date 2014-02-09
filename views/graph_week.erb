@@ -1,0 +1,29 @@
+<h2>Graph <small>Hours Per Week</small></h2>
+
+<canvas id="line" data-type="Line"></canvas>
+
+<script src="/js/chart.js"></script>
+<script>
+	(function(){
+		var t;
+		$(window).on('resize', function()
+		{
+			clearTimeout(t);
+			t = setTimeout(function()
+			{
+				$("canvas").each(function(i,el){
+					$(el).attr({
+						"width":$(el).parent().width(),
+						"height":$(el).parent().outerHeight()
+					});
+				});
+				var ctx = document.getElementById('line').getContext("2d");
+				var chart = new Chart(ctx)
+					.Line(<%= @output.to_json %>,{
+						bezierCurve: true
+					});
+			}, 100);
+		});
+		$(window).trigger('resize');
+	}());
+</script>
